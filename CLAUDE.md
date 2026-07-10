@@ -23,14 +23,10 @@ https://github.com/Klerith/fernando-skills (installed with
 `npx skills@latest add Klerith/fernando-skills`). Check for `/spec` and `/spec-impl` slash
 commands / spec docs before implementing features — specs should drive implementation.
 
-## Commands
 
-```bash
-npm run dev     # start dev server (Turbopack)
-npm run build   # production build
-npm run start   # run production build
-npm run lint    # eslint (flat config, eslint.config.mjs)
-```
+## Skills
+Always use  /frontend-design for designing user interface
+
 
 No test runner is configured yet.
 
