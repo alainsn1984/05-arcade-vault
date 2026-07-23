@@ -1,6 +1,6 @@
 # Spec 02 — Home + reubicación de Biblioteca
 
-**Estado:** Approved
+**Estado:** Implementado
 **Depende de:** 01-mvp-pantallas-visuales
 **Fecha:** 2026-07-13
 
@@ -52,19 +52,19 @@ No se introducen tipos ni estructuras nuevas en `lib/data.ts`. El Home consume e
 
 ## Criterios de aceptación
 
-- [ ] `npm run build` compila sin errores.
-- [ ] `/` muestra el Home (hero, why, preview de juegos, stats, actividad en vivo, pricing, CTA final) en vez del grid de Biblioteca.
-- [ ] `/biblioteca` muestra el grid completo de los 8 juegos con búsqueda por nombre y filtro por categoría funcionando (idéntico al comportamiento previo de `/`).
-- [ ] Home: botones "EXPLORAR JUEGOS", "VER TODOS LOS JUEGOS" e "INSERTAR MONEDA" navegan a `/biblioteca`.
-- [ ] Home: botones "CREAR CUENTA" y "EMPEZAR GRATIS" navegan a `/login`.
-- [ ] Home: botón "VER SALÓN" navega a `/hall-of-fame`.
-- [ ] Home: clic en una mini-card de la sección "JUEGOS DISPONIBLES AHORA" navega a `/game/[id]` con el id correcto.
-- [ ] Home: sección stats muestra `${GAMES.length}+ JUEGOS` (es decir "8+"), no "12+" hardcodeado.
-- [ ] Home: ticker de "últimas puntuaciones" y "top jugadores de hoy" muestran datos derivados de `seededScores`/`PLAYERS`/`GAMES` (no los arrays hardcodeados del template original).
-- [ ] Home: animaciones `.reveal` se activan al hacer scroll (mismo comportamiento que `useReveal` del template).
-- [ ] Nav muestra link "Inicio" (desktop y menú mobile) que navega a `/` y resalta como activo solo en `/`.
-- [ ] Nav: link "Biblioteca" resalta como activo en `/biblioteca` y en `/game/*`, ya no en `/`.
-- [ ] Aspecto visual del Home (colores neón, tipografía pixel, silhouettes flotantes, efecto CRT) coincide con `home.jsx`/`arcade-vault-standalone.html` de referencia.
+- [x] `npm run build` compila sin errores.
+- [x] `/` muestra el Home (hero, why, preview de juegos, stats, actividad en vivo, pricing, CTA final) en vez del grid de Biblioteca.
+- [x] `/biblioteca` muestra el grid completo de los 8 juegos con búsqueda por nombre y filtro por categoría funcionando (idéntico al comportamiento previo de `/`).
+- [x] Home: botones "EXPLORAR JUEGOS", "VER TODOS LOS JUEGOS" e "INSERTAR MONEDA" navegan a `/biblioteca`.
+- [x] Home: botones "CREAR CUENTA" y "EMPEZAR GRATIS" navegan a `/login`.
+- [x] Home: botón "VER SALÓN" navega a `/hall-of-fame`.
+- [x] Home: clic en una mini-card de la sección "JUEGOS DISPONIBLES AHORA" navega a `/game/[id]` con el id correcto.
+- [x] Home: sección stats muestra `${GAMES.length}+ JUEGOS` (es decir "8+"), no "12+" hardcodeado.
+- [x] Home: ticker de "últimas puntuaciones" y "top jugadores de hoy" muestran datos derivados de `seededScores`/`PLAYERS`/`GAMES` (no los arrays hardcodeados del template original).
+- [x] Home: animaciones `.reveal` se activan al hacer scroll (mismo comportamiento que `useReveal` del template).
+- [x] Nav muestra link "Inicio" (desktop y menú mobile) que navega a `/` y resalta como activo solo en `/`.
+- [x] Nav: link "Biblioteca" resalta como activo en `/biblioteca` y en `/game/*`, ya no en `/`.
+- [x] Aspecto visual del Home (colores neón, tipografía pixel, silhouettes flotantes, efecto CRT) coincide con `home.jsx`/`arcade-vault-standalone.html` de referencia.
 
 ## Decisiones tomadas y descartadas
 
