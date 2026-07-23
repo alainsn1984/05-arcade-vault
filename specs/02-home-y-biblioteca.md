@@ -1,6 +1,6 @@
 # Spec 02 — Home + reubicación de Biblioteca
 
-**Estado:** Draft
+**Estado:** Approved
 **Depende de:** 01-mvp-pantallas-visuales
 **Fecha:** 2026-07-13
 
