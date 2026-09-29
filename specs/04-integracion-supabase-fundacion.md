@@ -1,6 +1,6 @@
 # Spec 04 — Integración Supabase (fundación)
 
-**Estado:** Approved
+**Estado:** Implementado
 **Depende de:** — (fundación independiente)
 **Fecha:** 2026-09-29
 

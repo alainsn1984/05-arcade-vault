@@ -21,6 +21,8 @@ Copiar `.env.template` a `.env.local` y completar:
 
 - `RESEND_API_KEY` — API key de [Resend](https://resend.com), usada para enviar el correo del formulario de contacto (`/about`).
 - `CONTACT_EMAIL` — correo destinatario de los mensajes de contacto.
+- `NEXT_PUBLIC_SUPABASE_URL` — URL del proyecto Supabase (ej. `https://your-project-ref.supabase.co`).
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` — Publishable key del proyecto Supabase (`sb_publishable_...`); distinta de la legacy `anon` key.
 
 Sin estas variables, `POST /api/contact` responde `500`.
 
