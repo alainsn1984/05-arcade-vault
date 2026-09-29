@@ -5,19 +5,22 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { GAMES } from "@/lib/data";
+import AsteroidsGame from "@/components/games/AsteroidsGame";
 
 export default function GamePlayer() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const game = GAMES.find((g) => g.id === params.id);
+  const isReal = params.id === "rocas";
 
   const [score, setScore] = useState(0);
-  const [lives] = useState(3);
+  const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
   const [paused, setPaused] = useState(false);
   const [over, setOver] = useState(false);
   const [name, setName] = useState("INVITADO");
   const [saved, setSaved] = useState(false);
+  const [gameKey, setGameKey] = useState(0);
 
   useEffect(() => {
     try {
@@ -29,24 +32,27 @@ export default function GamePlayer() {
   }, []);
 
   useEffect(() => {
-    if (over || paused) return;
+    if (isReal || over || paused) return;
     const t = setInterval(() => setScore((s) => s + Math.floor(10 + Math.random() * 90)), 220);
     return () => clearInterval(t);
-  }, [over, paused]);
+  }, [isReal, over, paused]);
 
   useEffect(() => {
+    if (isReal) return;
     if (score > 0 && score % 2500 < 100) setLevel((l) => l + 1);
-  }, [score]);
+  }, [isReal, score]);
 
   if (!game) notFound();
 
   const endGame = () => setOver(true);
   const restart = () => {
     setScore(0);
+    setLives(3);
     setLevel(1);
     setPaused(false);
     setOver(false);
     setSaved(false);
+    if (isReal) setGameKey((k) => k + 1);
   };
 
   const saveScore = () => {
@@ -96,34 +102,47 @@ export default function GamePlayer() {
         </div>
       </div>
 
-      <div className="crt">
-        <div className="crt-screen">
-          <div className="game-arena">
-            <div className="grid-floor"></div>
-            <div className="enemy e1"></div>
-            <div className="enemy e2"></div>
-            <div className="enemy e3"></div>
-            <div className="player-ship"></div>
-          </div>
-          {paused && (
-            <div className="crt-content" style={{ background: "rgba(0,0,0,0.6)", zIndex: 5 }}>
-              <div>
-                <div className="pixel neon-yellow" style={{ fontSize: 22 }}>
-                  EN PAUSA
-                </div>
-                <div className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", marginTop: 10, letterSpacing: "0.16em" }}>
-                  PULSA REANUDAR PARA CONTINUAR
+      {isReal ? (
+        <div style={{ position: "relative", lineHeight: 0 }}>
+          <AsteroidsGame
+            key={gameKey}
+            paused={paused}
+            onScoreChange={setScore}
+            onLivesChange={setLives}
+            onLevelChange={setLevel}
+            onGameOver={endGame}
+          />
+        </div>
+      ) : (
+        <div className="crt">
+          <div className="crt-screen">
+            <div className="game-arena">
+              <div className="grid-floor"></div>
+              <div className="enemy e1"></div>
+              <div className="enemy e2"></div>
+              <div className="enemy e3"></div>
+              <div className="player-ship"></div>
+            </div>
+            {paused && (
+              <div className="crt-content" style={{ background: "rgba(0,0,0,0.6)", zIndex: 5 }}>
+                <div>
+                  <div className="pixel neon-yellow" style={{ fontSize: 22 }}>
+                    EN PAUSA
+                  </div>
+                  <div className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", marginTop: 10, letterSpacing: "0.16em" }}>
+                    PULSA REANUDAR PARA CONTINUAR
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+          <div className="crt-bottom">
+            <span className="led">SEÑAL OK</span>
+            <span>{game.title} · CRT-83 · 60 HZ</span>
+            <span>CARGA · 1MB</span>
+          </div>
         </div>
-        <div className="crt-bottom">
-          <span className="led">SEÑAL OK</span>
-          <span>{game.title} · CRT-83 · 60 HZ</span>
-          <span>CARGA · 1MB</span>
-        </div>
-      </div>
+      )}
 
       {over && (
         <div className="modal-bd">
