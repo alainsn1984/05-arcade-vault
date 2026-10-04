@@ -2,13 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { GAMES, seededScores, type Game } from "@/lib/data";
-
-function hashSeed(id: string): number {
-  let h = 0;
-  for (const c of id) h = (h * 31 + c.charCodeAt(0)) % 100000;
-  return h + 1;
-}
+import { type Game, type ScoreRow } from "@/lib/data";
+import { type TickerRow } from "@/lib/scores";
 
 function useReveal() {
   useEffect(() => {
@@ -184,14 +179,15 @@ const FEATURES = [
   { i: "ROCKET", t: "SIEMPRE CRECIENDO", d: "Agregamos nuevos juegos constantemente. Vuelve seguido, siempre habrá algo nuevo que jugar.", c: "green" },
 ];
 
-const TICKER = GAMES.slice(0, 7).map((g) => {
-  const row = seededScores(hashSeed(g.id), 1)[0];
-  return { player: row.name, gameTitle: g.title, score: row.score, color: g.color };
-});
-
-const TOP_PLAYERS = seededScores(hashSeed(GAMES[0].id), 5);
-
-export default function Home() {
+export default function Home({
+  games,
+  ticker,
+  topPlayers,
+}: {
+  games: Game[];
+  ticker: TickerRow[];
+  topPlayers: ScoreRow[];
+}) {
   const router = useRouter();
   useReveal();
 
@@ -247,7 +243,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GAMES PREVIEW */}
       <section className="home-section reveal">
         <div className="section-head">
           <div className="kicker pixel neon-cyan">// 02</div>
@@ -255,7 +250,7 @@ export default function Home() {
           <div className="section-rule"></div>
         </div>
         <div className="mini-rail">
-          {GAMES.slice(0, 6).map((g) => (
+          {games.slice(0, 6).map((g) => (
             <MiniCard key={g.id} game={g} onClick={() => router.push(`/game/${g.id}`)} />
           ))}
         </div>
@@ -270,7 +265,7 @@ export default function Home() {
       <section className="home-stats reveal">
         <div className="stats-inner">
           {[
-            { n: `${GAMES.length}+`, u: "JUEGOS", s: "Y CONTANDO" },
+            { n: `${games.length}+`, u: "JUEGOS", s: "Y CONTANDO" },
             { n: "MILES", u: "DE PARTIDAS", s: "JUGADAS CADA DÍA" },
             { n: "GLOBAL", u: "RANKING", s: "COMPITE CON EL MUNDO" },
           ].map((st, i) => (
@@ -296,7 +291,12 @@ export default function Home() {
               <div className="ac-title pixel">▸ ÚLTIMAS PUNTUACIONES</div>
             </div>
             <div className="ticker">
-              {TICKER.map((r, i) => (
+              {ticker.length === 0 && (
+                <div className="tick-row" style={{ color: "var(--ink-faint)", letterSpacing: "0.1em" }}>
+                  AÚN SIN PARTIDAS
+                </div>
+              )}
+              {ticker.map((r, i) => (
                 <div key={i} className="tick-row" style={{ animationDelay: i * 60 + "ms" }}>
                   <span className={"tk-p neon-" + r.color}>{r.player}</span>
                   <span className="tk-mid">▸ {r.gameTitle}</span>
@@ -314,7 +314,12 @@ export default function Home() {
               </button>
             </div>
             <div className="top-list">
-              {TOP_PLAYERS.map((r, i) => (
+              {topPlayers.length === 0 && (
+                <div className="top-row" style={{ color: "var(--ink-faint)", letterSpacing: "0.1em" }}>
+                  SÉ EL PRIMERO EN EL RANKING
+                </div>
+              )}
+              {topPlayers.map((r, i) => (
                 <div key={i} className={"top-row" + (i === 0 ? " top1" : i === 1 ? " top2" : i === 2 ? " top3" : "")}>
                   <span className="tp-rk">#{String(r.rank).padStart(2, "0")}</span>
                   <span className="tp-bar">
